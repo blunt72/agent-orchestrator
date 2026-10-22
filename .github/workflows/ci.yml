@@ -46,7 +46,10 @@ jobs:
         run: npm run build
 
       - name: Unit / integration / offline e2e tests (vitest)
-        run: npm test
+        # Large artifact fixtures need headroom on the smaller macOS runners.
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
+        run: npm test -- --maxWorkers=2 --minWorkers=1
 
       - name: Script tests (node:test)
         run: node --test tests/local/*.test.mjs

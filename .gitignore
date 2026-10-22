@@ -1,0 +1,16 @@
+node_modules/
+dist/
+logs/
+!logs/.gitkeep
+data/
+!data/.gitkeep
+.agenthub/
+outputs/
+.env
+.DS_Store
+._*
+*.map
+__pycache__/
+*.pyc
+.venv/
+*.sqlite3

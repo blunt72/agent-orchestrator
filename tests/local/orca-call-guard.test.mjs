@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {OrcaCallGuard} from '../../scripts/orca-call-guard.mjs';
+const key = {taskId:'task-1',terminalId:'term-1'};
+const digest = 'a'.repeat(64);
+test('first read allowed and valid result recorded', () => {const g=new OrcaCallGuard(); assert.equal(g.beginRead({...key,now:0}).allow,true); assert.equal(g.finishRead({...key,now:1,digest}).allow,true);});
+test('duplicate concurrent read is denied',()=>{const g=new OrcaCallGuard();g.beginRead({...key,now:0});assert.equal(g.beginRead({...key,now:1}).reason,'READ_IN_FLIGHT');});
+test('three unchanged observations trip breaker',()=>{const g=new OrcaCallGuard();for(let i=0;i<3;i++){g.beginRead({...key,now:i*2});var r=g.finishRead({...key,now:i*2+1,digest});}assert.equal(r.reason,'REPEATED_UNCHANGED_STATE');assert.equal(g.beginRead({...key,now:10}).allow,false);});
+test('new digest resets unchanged counter',()=>{const g=new OrcaCallGuard();for(const [i,d] of [[0,digest],[1,'b'.repeat(64)],[2,digest]]){g.beginRead({...key,now:i*2});assert.equal(g.finishRead({...key,now:i*2+1,digest:d}).allow,true);}});
+test('read rate budget fails closed',()=>{const g=new OrcaCallGuard({maxReads:2});for(let i=0;i<2;i++){g.beginRead({...key,now:i*2});g.finishRead({...key,now:i*2+1,digest:i?'b'.repeat(64):digest});}assert.equal(g.beginRead({...key,now:5}).reason,'READ_RATE_BUDGET_EXHAUSTED');});
+test('duration budget fails closed',()=>{const g=new OrcaCallGuard({maxDurationMs:10});g.beginRead({...key,now:0});g.finishRead({...key,now:1,digest});assert.equal(g.beginRead({...key,now:10}).reason,'DURATION_BUDGET_EXHAUSTED');});
+test('failed read stops further reads',()=>{const g=new OrcaCallGuard();g.beginRead({...key,now:0});g.failRead({...key,now:1});assert.equal(g.beginRead({...key,now:2}).allow,false);});
+test('invalid digest fails closed',()=>{const g=new OrcaCallGuard();g.beginRead({...key,now:0});assert.equal(g.finishRead({...key,now:1,digest:'bad'}).reason,'INVALID_READ_OBSERVATION');});
+test('send is never approved',()=>{const g=new OrcaCallGuard();assert.equal(g.requestTerminalSend({...key,now:1}).allow,false);});
+test('identities isolated by task and terminal',()=>{const g=new OrcaCallGuard();g.beginRead({...key,now:0});assert.equal(g.beginRead({taskId:'task-2',terminalId:key.terminalId,now:1}).allow,true);});
+test('non-monotonic time rejected',()=>{const g=new OrcaCallGuard();g.beginRead({...key,now:5});assert.throws(()=>g.inspect({...key,now:4}),/NON_MONOTONIC/);});
+test('invalid policy rejected',()=>assert.throws(()=>new OrcaCallGuard({maxReads:0}),/INVALID_GUARD_POLICY/));

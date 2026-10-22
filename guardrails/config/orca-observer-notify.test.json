@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "scope": "mechanism_terminal_only",
+  "cli": "/Applications/Orca.app/Contents/Resources/bin/orca",
+  "workspace": "/path/to/orca-workspace",
+  "runtimeId": "00000000-0000-4000-8000-000000000000",
+  "sender": "term_00000000-0000-0000-0000-00000000000a",
+  "receiver": "term_00000000-0000-0000-0000-00000000000b",
+  "runId": "run_synthetic01",
+  "consumerGeneration": 1,
+  "observedTerminal": "term_00000000-0000-0000-0000-00000000000a",
+  "baselineSha256": null,
+  "senderIdentity": null,
+  "receiverIdentity": null,
+  "observedIdentity": null
+}

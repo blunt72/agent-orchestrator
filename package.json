@@ -1,0 +1,47 @@
+{
+  "name": "agent-orchestrator",
+  "version": "0.3.1",
+  "private": true,
+  "description": "Local AgentHub for bidirectional ACP multi-turn collaboration between Codex and Gemini",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "agenthub": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/index.ts",
+    "agenthub": "tsx src/index.ts",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:e2e": "vitest run tests/e2e",
+    "test:real": "AGENTHUB_REAL_TESTS=1 vitest run tests/e2e/real-"
+  },
+  "keywords": [
+    "acp",
+    "codex",
+    "gemini",
+    "agent",
+    "agenthub",
+    "multi-agent",
+    "orchestrator"
+  ],
+  "author": "agent-orchestrator maintainers (TBD)",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@agentclientprotocol/codex-acp": "^2.0.1",
+    "@agentclientprotocol/sdk": "^1.5.1",
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "fastify": "^5.12.5",
+    "ora": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "tsx": "^4.23.12",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.7"
+  }
+}

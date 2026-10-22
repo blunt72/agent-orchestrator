@@ -1,7 +1,7 @@
-import { ProjectStore, TaskFilter } from "../projects/project-store.js";
+import { ProjectStore, type TaskFilter } from "../projects/project-store.js";
 import { Task } from "./task.js";
 
-export { TaskFilter };
+export type { TaskFilter };
 
 export interface TaskTree {
   root: Task | null;

@@ -1,0 +1,48 @@
+# Offline test suites only: no secrets, no model/provider calls.
+# tests/e2e/real-* are excluded by vitest.config.ts unless AGENTHUB_REAL_TESTS=1,
+# which this workflow never sets.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  offline-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      # Build first: tests/unit/print-workflow-cli.test.ts executes dist/index.js.
+      - name: Type-check and build (tsc)
+        run: npm run build
+
+      - name: Unit / integration / offline e2e tests (vitest)
+        run: npm test
+
+      - name: Script tests (node:test)
+        run: node --test tests/local/*.test.mjs
+
+      - name: Guardrails tests (Python unittest + node:test)
+        run: ./guardrails/run-tests.sh

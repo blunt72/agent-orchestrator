@@ -1,5 +1,7 @@
 # agent-orchestrator（开源候选版）
 
+[![CI](https://github.com/blunt72/agent-orchestrator/actions/workflows/ci.yml/badge.svg)](https://github.com/blunt72/agent-orchestrator/actions/workflows/ci.yml)
+
 > 状态：早期、个人维护、实验性。许可证：Apache-2.0（见 LICENSE）。
 
 agent-orchestrator 是一个**本地运行**的 TypeScript 工具（内部核心模块沿用 AgentHub 这个名字，CLI 命令仍为 `agenthub`）：默认让 Codex 当开发者、Gemini（通过 Google Antigravity 的本地 `agentapi`）当审查者（任务设 `reviewerId: "codex"` 时两者互换），围绕一个正式的 Task 跑“隔离开发 → 独立测试门禁 → 审查 → 返工”的流程，并提供项目/史诗/任务的管理、REST API 与本地 Web 看板。仓库另附 `guardrails/`：用 Codex 当主控、经 Orca 桌面应用的 `orca` CLI 管理编码 agent worker 时写的 Python/Node 防护脚本。

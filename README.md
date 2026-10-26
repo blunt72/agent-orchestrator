@@ -66,7 +66,7 @@ npm run test:real                 # 等价于 AGENTHUB_REAL_TESTS=1 vitest run t
 
 ## 文档
 
-`ARCHITECTURE.md`、`TASK_ENGINE.md`、`PROJECT_ENGINE.md`、`API.md`（REST 接口）、`DASHBOARD.md`，以及 `docs/` 下的组件说明（Orca 相关按主题合并为 `docs/orca-*.md`，Antigravity 相关为 `docs/antigravity-*.md`，脚本说明为 `docs/scripts.md`）。部分文档写于早期版本（V0.2 / V0.3），以代码为准。
+`ARCHITECTURE.md`、`TASK_ENGINE.md`、`PROJECT_ENGINE.md`、`API.md`（REST 接口）、`DASHBOARD.md`，以及 `docs/` 下的组件说明（Orca 相关按主题合并为 `docs/orca-*.md`，Antigravity 相关为 `docs/antigravity-*.md`，脚本说明为 `docs/scripts.md`；另有按单个组件拆分的专题文档，如 `docs/ORCA_*.md`、`docs/ACP_READ_ONLY_REVIEW.md`、`docs/AUTOMATION_FAST_PATH.md`、`docs/PRINT_WORKFLOW_CLI.md`、`docs/ANTIGRAVITY_PRINT_CAPTURE.md`）。部分文档写于早期版本（V0.2 / V0.3），以代码为准。
 
 ---
 

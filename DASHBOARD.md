@@ -6,13 +6,16 @@ The AgentHub Web Dashboard provides a real-time, lightweight web interface for p
 
 ## 1. Accessing the Dashboard
 
-When running AgentHub server:
+When running the AgentHub server (after `npm ci` and `npm run build`; see [docs/install.md](docs/install.md)):
 
 ```bash
-npm start
-# or
+node dist/index.js server --port 3000
+# or, from this repository:
+npm start -- server --port 3000
 npx agenthub server --port 3000
 ```
+
+`npm start` with no arguments only prints CLI help and exits 1. It does not listen. The default bind address is `127.0.0.1` (no authentication). Pass `--host` only if you intend to change that.
 
 The Web Dashboard is immediately available at:
 - `http://localhost:3000/`

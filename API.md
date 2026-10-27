@@ -2,9 +2,10 @@
 
 Local Fastify API for projects, epics, tasks (including subtasks), human-in-the-loop operations and SSE streams. It binds to `127.0.0.1` by default and has **no authentication** — do not expose it to a network.
 
-Start the server:
+Start the server (install dependencies first; see [docs/install.md](docs/install.md)):
 
 ```bash
+npm ci
 npm run build
 node dist/index.js server --port 3000 --host 127.0.0.1
 ```

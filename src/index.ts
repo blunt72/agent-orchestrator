@@ -160,7 +160,7 @@ program
   .command("server")
   .description("Start the AgentHub REST API server")
   .option("-p, --port <number>", "Port to bind to", "3000")
-  .option("-h, --host <host>", "Host address to bind to", "127.0.0.1")
+  .option("-H, --host <host>", "Host address to bind to", "127.0.0.1")
   .action(async (options) => {
     const port = parseInt(options.port, 10);
     const host = options.host;
